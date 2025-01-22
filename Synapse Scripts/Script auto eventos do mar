@@ -1,0 +1,31 @@
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoid = character.Humanoid
+
+-- Auto-fire
+game:GetService("RunService").RenderStepped:Connect(function()
+    if player:GetMouse().Target then
+        player:GetMouse().Target:FindFirstChild("Humanoid"):TakeDamage(1000)
+    end
+end)
+
+-- Instant Health
+humanoid.MaxHealth = 100000
+humanoid.Health = 100000
+
+-- Infinite Ammo
+local ammo = game:GetService("ReplicatedStorage").DefaultSettings.WeaponSettings
+for _, gun in pairs(ammo:GetChildren()) do
+    gun.Ammo = 100000
+end
+
+-- Auto-fire config
+local autoFire = true
+local gunName = "M4A1-S"
+
+while autoFire do
+    game:GetService("ReplicatedStorage").DefaultSettings.WeaponSettings[gunName].FireRate = 100
+    game:GetService("ReplicatedStorage").DefaultSettings.WeaponSettings[gunName].Range = 1000
+    game:GetService("ReplicatedStorage").DefaultSettings.WeaponSettings[gunName].Damage = 1000
+    wait(0.01)
+end
